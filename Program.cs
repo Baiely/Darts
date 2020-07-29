@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -111,17 +111,23 @@ namespace _1hour
             Console.BackgroundColor = ConsoleColor.DarkRed;
             Print( String.Format( "Der Gewinner ist {0}!", CheckWinner( spielerliste ) ) );
             Console.BackgroundColor = ConsoleColor.Black;
-            File.WriteAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), "Datum:," + localDate + "\n");
-            File.AppendAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), "Spielmodus," + ursprung + "\n");
-            File.AppendAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), "Gewinner:," + CheckWinner(spielerliste) + "\n");
-            File.AppendAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), "\n\n");
-            File.AppendAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), "Ergebnisse:\n");
-            File.AppendAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), "\n\n");
-            File.AppendAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), "Name,Punkte\n");
+            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Baiely Darts");
+            string path2 = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDoc‌​uments), "Baiely Darts", fomattedtime + ".csv");
+            if (Directory.Exists(path) != true)
+            {
+                Directory.CreateDirectory(path);
+            }
+            File.WriteAllText(path2, "Datum:," + localDate + "\n");
+            File.AppendAllText(path2, "Spielmodus," + ursprung + "\n");
+            File.AppendAllText(path2, "Gewinner:," + CheckWinner(spielerliste) + "\n");
+            File.AppendAllText(path2, "\n\n");
+            File.AppendAllText(path2, "Ergebnisse:\n");
+            File.AppendAllText(path2, "\n\n");
+            File.AppendAllText(path2, "Name,Punkte\n");
 
             for (int nummer = 0; nummer < spieler; nummer++)
             {
-                File.AppendAllText(String.Format(@"C:\Users\Baiely\Documents\Data\" + fomattedtime + ".csv"), spielerliste[nummer,0] + "," + spielerliste[nummer,1] + "\n");
+                File.AppendAllText(path2, spielerliste[nummer,0] + "," + spielerliste[nummer,1] + "\n");
             }
             //using (StreamWriter outfile = new StreamWriter(@""))
             Console.ReadKey();
